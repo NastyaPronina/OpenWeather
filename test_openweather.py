@@ -1,6 +1,9 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 
@@ -32,3 +35,16 @@ def test_fill_search_city_field(driver):
         (By.CSS_SELECTOR, '.grid-container.grid-4-5 h2'), 'New York'))
     displayed_city = driver.find_element(By.CSS_SELECTOR, '.grid-container.grid-4-5 h2').text
     assert displayed_city == expected_city
+
+
+def test_switch_unit_of_measurement(driver):
+    driver.get("https://openweathermap.org/")
+    button_f = driver.find_element(By.XPATH, '//*[@id="weather-widget"]/div[1]/div/div/div[1]/div[2]')
+    time.sleep(10)
+    move = ActionChains(driver)
+    move.click_and_hold(button_f).move_by_offset(80, 0).release().perform()
+    # ActionChains(driver).drag_and_drop_by_offset(button_f, 72, 2).perform()
+    time.sleep(10)
+
+
+
