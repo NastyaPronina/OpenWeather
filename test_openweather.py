@@ -48,3 +48,24 @@ def test_switch_unit_of_measurement(driver):
 
 
 
+# as a user I want to be able to open Pricing page, so that I can see "Pricing" title at the top of the page
+# verify if title of the opened page is "Pricing" and it's visible
+# verify if there is a "Detailed pricing" button on the "Pricing" page
+# Precondition
+# Navigate to Main page https://openweathermap.org/
+# Steps:
+# Go to Pricing page using Pricing button in the top toolbar
+# Verify title of the opened page
+# Expected result:
+# The title of the Pricing page is visible and matches expected text (Pricing)
+def test_open_pricing(driver):
+    driver.get("https://openweathermap.org/")
+    WebDriverWait(driver, 10).until_not(EC.presence_of_element_located(
+        (By.CSS_SELECTOR, 'div.owm-loader-container > div')))
+    button_pricing = driver.find_element(By.XPATH, '//div[@id="desktop-menu"]//a[text()="Pricing"]')
+    button_pricing.click()
+    expected_title = "Pricing"
+    displayed_title = driver.find_element(By.CSS_SELECTOR, 'h1.breadcrumb-title').text
+    assert displayed_title == expected_title
+
+
